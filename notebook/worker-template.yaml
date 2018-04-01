@@ -1,0 +1,15 @@
+kind: Pod
+spec:
+  restartPolicy: Never
+  containers:
+  - image: ogrisel/dask-notebook-extended:latest
+    name: dask-worker
+    imagePullPolicy: IfNotPresent
+    args: [dask-worker, --nthreads, '2', --no-bokeh, --memory-limit, 2GB, --death-timeout, '60']
+    resources:
+      limits:
+        cpu: "2"
+        memory: 2G
+      requests:
+        cpu: "2"
+        memory: 2G

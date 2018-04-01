@@ -1,0 +1,25 @@
+proxy:
+  secretToken: "3f96a16ffe3909b7c91692686ac5f2e4a89ab57037d94e36b02bbc7a7a59edf2"
+
+singleuser:
+  extraEnv:
+    DASK_DIAGNOSTICS_LINK: "{JUPYTERHUB_SERVICE_PREFIX}proxy/{port}/status"
+    DASK_KUBERNETES_WORKER_TEMPLATE_PATH: /etc/dask/kubernetes/worker-template.yaml
+    DASK_KUBERNETES_WORKER_NAME: "dask-{JUPYTERHUB_USER}-{uuid}"
+  defaultUrl: "/lab"
+  serviceAccountName: dask-user
+  image:
+    name: ogrisel/dask-notebook-extended
+    tag: latest
+
+hub:
+  extraEnv:
+    JUPYTER_ENABLE_LAB: 1
+  extraConfig: |
+    c.KubeSpawner.cmd = ['jupyter-labhub']
+
+
+auth:
+  admin:
+    users:
+      - ogrisel

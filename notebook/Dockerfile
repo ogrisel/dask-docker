@@ -20,23 +20,35 @@ RUN conda install --yes \
     && conda clean -tipsy
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager dask-labextension
 
+RUN pip install -U --no-cache-dir cython pip
 RUN pip install \
     matplotlib \
     joblib \
     scikit-learn==0.20.rc1 \
-    git+https://github.com/dask/dask-kubernetes.git \
+    kubernetes \
     git+https://github.com/dask/dask-ml.git \
+    git+https://github.com/dask/dask-kubernetes.git \
     graphviz \
-    --no-cache-dir \
-    --no-dependencies
+    nbgitpuller \
+    --no-cache-dir
+
+RUN pip install -U \
+    jupyterhub \
+    jupyterlab \
+    ipywidgets \
+    --no-cache-dir
+
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager --debug
 
 USER root
+COPY worker-template.yaml /etc/dask/kubernetes/worker-template.yaml
 COPY prepare.sh /usr/bin/prepare.sh
 RUN chmod +x /usr/bin/prepare.sh
 RUN mkdir /opt/app
 COPY examples/ /home/$NB_USER/examples
 RUN chown -R $NB_USER /home/$NB_USER/examples
 USER $NB_USER
+
 
 ENTRYPOINT ["tini", "--", "/usr/bin/prepare.sh"]
 CMD ["start.sh", "jupyter", "lab"]
