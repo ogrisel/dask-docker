@@ -16,13 +16,19 @@ RUN conda install --yes \
     numpy==1.15.1 \
     pandas==0.23.4 \
     ipywidgets \
-    jupyterlab==0.34.7\
+    jupyterlab==0.34.7 \
     && conda clean -tipsy
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager dask-labextension
 
-RUN pip install graphviz \
-                --no-cache-dir \
-                --no-dependencies
+RUN pip install \
+    matplotlib \
+    joblib \
+    scikit-learn==0.20.rc1 \
+    git+https://github.com/dask/dask-kubernetes.git \
+    git+https://github.com/dask/dask-ml.git \
+    graphviz \
+    --no-cache-dir \
+    --no-dependencies
 
 USER root
 COPY prepare.sh /usr/bin/prepare.sh
