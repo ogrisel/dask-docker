@@ -22,8 +22,8 @@ To setup the cluster-admin role binding used by helm / tiller:
 
 To setup an admin level role binding for dask-kubernetes
 
-    kubectl --namespace jupyterhub create serviceaccount dask-user
-    kubectl create clusterrolebinding dask-user --clusterrole cluster-admin --serviceaccount=jupyterhub:dask-user
+    kubectl --namespace jhub create serviceaccount dask-user
+    kubectl create clusterrolebinding dask-user --clusterrole cluster-admin --serviceaccount=jhub:dask-user
 
 
 Public URL of the reverse proxy:
