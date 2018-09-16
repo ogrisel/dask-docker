@@ -35,7 +35,8 @@ RUN pip install \
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager dask-labextension
 
 USER root
-COPY worker-template.yaml /etc/dask/kubernetes/worker-template.yaml
+COPY worker-template.yaml /home/$NB_USER/worker-template.yaml
+COPY custom-dask-config.yaml /home/$NB_USER/.config/dask/custom-dask-config.yaml
 COPY prepare.sh /usr/bin/prepare.sh
 RUN chmod +x /usr/bin/prepare.sh
 RUN mkdir /opt/app

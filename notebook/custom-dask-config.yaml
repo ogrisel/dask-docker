@@ -1,0 +1,6 @@
+kubernetes:
+  worker-template-path: /home/{user}/worker-template.yaml
+
+distributed:
+  dashboard:
+    link: "{JUPYTERHUB_SERVICE_PREFIX}proxy/{port}/status"
