@@ -32,13 +32,7 @@ RUN pip install \
     nbgitpuller \
     --no-cache-dir
 
-RUN pip install -U \
-    jupyterhub \
-    jupyterlab \
-    ipywidgets \
-    --no-cache-dir
-
-RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager --debug
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager dask-labextension
 
 USER root
 COPY worker-template.yaml /etc/dask/kubernetes/worker-template.yaml
